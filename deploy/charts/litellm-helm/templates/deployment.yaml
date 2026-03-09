@@ -16,6 +16,11 @@ spec:
   selector:
     matchLabels:
       {{- include "litellm.selectorLabels" . | nindent 6 }}
+  minReadySeconds: {{ .Values.minReadySeconds | default 0 }}
+  {{- with .Values.deploymentStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       annotations:
